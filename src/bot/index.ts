@@ -5,6 +5,8 @@ import {
   startHandler,
   walletCommand,
   WAITING_FOR_POOL,
+  getAllPoolsHandler,
+  getPoolDetailsHandler,
 } from "./handler/walletHandler";
 import { swapEntry, handleSwapStep } from "./handler/swap";
 import { PublicKey } from "@solana/web3.js";
@@ -13,6 +15,7 @@ import { message } from "telegraf/filters";
 import { createPoolInteractive } from "../pool/createPool";
 import { TOKENS } from "../utils/tokens";
 import { MyContext, MySessionData } from "../utils/types/context";
+import { getUserPositions } from "../pool/getPositions";
 
 const bot = new Telegraf<MyContext>(process.env.TELEGRAM_BOT_TOKEN || "");
 
@@ -28,6 +31,40 @@ bot.use(
 bot.start(startHandler);
 bot.command("wallet", walletCommand);
 bot.command("swap", swapEntry);
+bot.action("GET_ALL_POOLS", getAllPoolsHandler);
+bot.action("GET_POOL_DETAILS", getPoolDetailsHandler);
+
+bot.action("GET_POSITIONS", async (ctx) => {
+  const userId = ctx.from.id.toString(); // telegram user id
+  const pairAddress = "H9EPqQKCvv9ddzK6KHjo8vvUPMLMJXmMmru9KUYNaDFQ"; // example pool
+
+  try {
+    const positions = await getUserPositions(userId, pairAddress);
+
+    if (!positions.length) {
+      return ctx.reply("❌ No positions found");
+    }
+
+    return ctx.reply(`📊 Found ${positions.length} positions`, {
+        parse_mode: "Markdown",
+        ...Markup.inlineKeyboard([
+          [
+            Markup.button.callback("💰 View wallet", "WALLET_VIEW"),
+            Markup.button.callback("🔑 Export Secret", "WALLET_EXPORT"),
+          ],
+          [Markup.button.callback("📚 Pools", "GET_ALL_POOLS")],
+          [Markup.button.callback("🔍 Pool Details", "GET_POOL_DETAILS")],
+          [Markup.button.callback("➕ Create New Pool", "create_pool")],
+          [Markup.button.callback("➕ View Positions", "GET_POSITIONS")],
+        ]),
+      });
+  } catch (err: any) {
+    console.error(err);
+    return ctx.reply(`⚠️ Failed to fetch positions: ${err.message}`);
+  }
+});
+
+
 
 // pools
 bot.action("create_pool", async (ctx) => {
@@ -77,6 +114,7 @@ bot.action(/quote_(.+)/, async (ctx) => {
         [Markup.button.callback("📚 Pools", "GET_ALL_POOLS")],
         [Markup.button.callback("🔍 Pool Details", "GET_POOL_DETAILS")],
         [Markup.button.callback("➕ Create New Pool", "create_pool")],
+        [Markup.button.callback("➕ View Positions", "GET_POSITIONS")],
       ])
     );
   } catch (err) {
@@ -126,6 +164,7 @@ bot.on(message("text"), async (ctx) => {
           [Markup.button.callback("📚 Pools", "GET_ALL_POOLS")],
           [Markup.button.callback("🔍 Pool Details", "GET_POOL_DETAILS")],
           [Markup.button.callback("➕ Create New Pool", "create_pool")],
+          [Markup.button.callback("➕ View Positions", "GET_POSITIONS")],
         ])
       );
     }
@@ -152,6 +191,7 @@ bot.on(message("text"), async (ctx) => {
         [Markup.button.callback("📚 Pools", "GET_ALL_POOLS")],
         [Markup.button.callback("🔍 Pool Details", "GET_POOL_DETAILS")],
         [Markup.button.callback("➕ Create New Pool", "create_pool")],
+        [Markup.button.callback("➕ View Positions", "GET_POSITIONS")],
       ])
     );
   } catch (err) {

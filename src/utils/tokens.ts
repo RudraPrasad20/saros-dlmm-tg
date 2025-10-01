@@ -15,7 +15,7 @@ export const TOKENS = {
     },
     USDC: { 
       id: "usdc",
-      mint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      mintAddress: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
       symbol: "USDC" ,
       name: "Usdc",
       decimals: 6 
@@ -23,7 +23,7 @@ export const TOKENS = {
     },
     USDT: { 
       id: "usdt",
-      mint: "Es9vMFrzaCERmJFr4Y7cHuaQSvq7SLWjtKh6zUZze7XA", 
+      mintAddress: "Es9vMFrzaCERmJFr4Y7cHuaQSvq7SLWjtKh6zUZze7XA", 
       symbol: "USDT",
       name: "Usdt",
       decimals: 6 
@@ -31,7 +31,7 @@ export const TOKENS = {
     },
     JUP: { 
       id:"jup",
-      mint: "JUPyEiTgC1uoXFLRzL6zZFxYQq1W3aG3W2rbmS6jwxCL", 
+      mintAddress: "JUPyEiTgC1uoXFLRzL6zZFxYQq1W3aG3W2rbmS6jwxCL", 
       symbol:"JUP",
       name:"Jupiter",
       decimals: 6 

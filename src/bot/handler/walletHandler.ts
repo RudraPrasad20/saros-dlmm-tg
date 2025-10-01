@@ -19,6 +19,7 @@ export async function startHandler(ctx: Context) {
         [Markup.button.callback("📚 Pools", "GET_ALL_POOLS")],
         [Markup.button.callback("🔍 Pool Details", "GET_POOL_DETAILS")],
         [Markup.button.callback("➕ Create New Pool", "create_pool")],
+        [Markup.button.callback("➕ View Positions", "GET_POSITIONS")],
       ])
     );
   }
