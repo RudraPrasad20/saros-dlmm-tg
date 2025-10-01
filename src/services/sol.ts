@@ -1,4 +1,4 @@
-import { Connection, sendAndConfirmRawTransaction, Transaction } from '@solana/web3.js';
+import { Connection } from '@solana/web3.js';
 const connection = new Connection(process.env.SOLANA_RPC_URL || '');
 
 export async function sendSignedTransaction(rawSignedTx: Buffer) {

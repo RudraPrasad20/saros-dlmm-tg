@@ -4,6 +4,6 @@ export const sarosDLMM = new LiquidityBookServices({
   mode: MODE.DEVNET,
   options: {
     rpcUrl: process.env.PUBLIC_RPC_URL!,
-    commitmentOrConfig: "confirmed"
+    commitmentOrConfig: "confirmed",
   },
 });

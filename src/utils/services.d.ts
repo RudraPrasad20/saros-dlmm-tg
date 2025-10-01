@@ -1,4 +1,3 @@
-// in services.d.ts
 export interface SwapParams {
     tokenMintX: PublicKey;
     tokenMintY: PublicKey;
@@ -7,7 +6,6 @@ export interface SwapParams {
     swapForY: boolean;
     isExactInput: boolean;
     pair: PublicKey;
-    hook?: PublicKey;  // <-- make optional
+    hook?: PublicKey;
     payer: PublicKey;
   }
-  
