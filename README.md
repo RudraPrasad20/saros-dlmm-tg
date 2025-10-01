@@ -4,6 +4,10 @@ A Telegram bot to interact with the Solana DLMM (Dynamic Liquidity Market Maker)
 ### Demo:
 
 
+https://github.com/user-attachments/assets/796133f9-db9a-444e-851a-637140ae20c6
+
+
+
 ## Features
 - User Wallet Management
 - Generate Solana wallets per Telegram user
